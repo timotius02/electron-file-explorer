@@ -1,7 +1,5 @@
 # Electron File Explorer
-=========================
 Sample application using Electron
-
 
 > Work in Progress
 
