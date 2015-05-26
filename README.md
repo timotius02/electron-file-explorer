@@ -1,14 +1,12 @@
 electron-boilerplate
 ==============
-Comprehensive boilerplate application for [Electron](http://electron.atom.io).  
+Fork of [Electron-Boilerplate](https://github.com/szwacz/electron-boilerplate) with SCSS support and 
 
 This project gives you mainly three things:
 
 1. Cross-platform development environment (works the same way on OSX, Windows and Linux).
 2. Basic structure for Electron app.
 3. Scripts to generate installers of your app for all three operating systems.
-
-By the way, there is a twin project to this one: [nw-boilerplate](https://github.com/szwacz/nw-boilerplate), which is the same thing but for NW.js.
 
 # Quick start
 The only development dependency of this project is [Node.js](https://nodejs.org). So just make sure you have it installed.
@@ -105,7 +103,7 @@ As installer [NSIS](http://nsis.sourceforge.net/Main_Page) is used. You have to 
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Jakub Szwacz
+Copyright (c) 2015 Timotius Sitorus
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
