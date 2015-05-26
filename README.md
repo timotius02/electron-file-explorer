@@ -1,12 +1,9 @@
-electron-boilerplate
-==============
-Fork of [Electron-Boilerplate](https://github.com/szwacz/electron-boilerplate) with SCSS support and 
+# Electron File Explorer
+=========================
+Sample application using Electron
 
-This project gives you mainly three things:
 
-1. Cross-platform development environment (works the same way on OSX, Windows and Linux).
-2. Basic structure for Electron app.
-3. Scripts to generate installers of your app for all three operating systems.
+> Work in Progress
 
 # Quick start
 The only development dependency of this project is [Node.js](https://nodejs.org). So just make sure you have it installed.
