@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Finder</title>
+    <link rel="stylesheet" type="text/css" href="node_modules/normalize.css/normalize.css">
     <link href="./stylesheets/main.css" rel="stylesheet" type="text/css">
     <script src="vendor/electron_boilerplate/env_config.js"></script>
     <script src="vendor/electron_boilerplate/context_menu.js"></script>
@@ -15,9 +16,9 @@
 </head>
 
 <body>
-    <div class="grid">
-        <div class="col-1-4" id="sidebar">
-            <h3>Folder</h3>
+    <div class="container">
+        <div id="sidebar">
+            <h3>FOLDERS</h3>
             <ul>
                 <li>AirDrop</li>
                 <li>Applications</li>
@@ -28,7 +29,7 @@
                 <li>User</li>
             </ul>
         </div>
-        <div class="col-3-4" id="main-container">
+        <div id="main-container">
 
             <h1 id="greet"></h1>
             <p class="subtitle">

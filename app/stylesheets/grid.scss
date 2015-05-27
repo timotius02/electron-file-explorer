@@ -5,8 +5,6 @@
 $pad: 20px;
 
 .grid {
-  background: white;
-  margin: 0 0 $pad 0;
   
   &:after {
     /* Or @extend clearfix */
@@ -18,7 +16,6 @@ $pad: 20px;
 
 [class*='col-'] {
   float: left;
-  padding-right: $pad;
   .grid &:last-of-type {
     padding-right: 0;
   }
