@@ -6,11 +6,14 @@ var env = require('./vendor/electron_boilerplate/env_config');
 var windowStateKeeper = require('./vendor/electron_boilerplate/window_state');
 
 var mainWindow;
+var DEBUG = false;
 
 // Preserver of the window size and position between app launches.
 var mainWindowState = windowStateKeeper('main', {
-    width: 1000,
-    height: 600
+    width: 800,
+    height: 600,
+    minWidth: 400,
+    minHeight: 300
 });
 
 // You have data from config/env_XXX.json file loaded here in case you need it.
@@ -22,8 +25,14 @@ app.on('ready', function () {
         x: mainWindowState.x,
         y: mainWindowState.y,
         width: mainWindowState.width,
-        height: mainWindowState.height
+        height: mainWindowState.height,
+        'min-width': 400,
+        'min-height': 300
     });
+
+    if (DEBUG) {
+        mainWindow.openDevTools();
+    }
 
     if (mainWindowState.isMaximized) {
         mainWindow.maximize();

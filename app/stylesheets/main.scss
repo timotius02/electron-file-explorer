@@ -1,25 +1,37 @@
-html, body {
+@import "grid";
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+
+$grey: #dedede;
+
+html,
+body {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow: auto;
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+}
+
+div {
+    height: inherit;
 }
 
 a {
     text-decoration: none;
 }
 
-.container {
-    text-align: center;
+#sidebar {
+    ul {
+        list-style-type: none;
+    }
+    background-color: $grey;
 }
 
-.subtitle {
-    color: gray;
+#main-container {
+
 }

@@ -36,11 +36,13 @@ var paths = {
 // -------------------------------------
 
 gulp.task('clean', function(callback) {
-    return destDir.dirAsync('.', { empty: true });
+    return destDir.dirAsync('.', {
+        empty: true
+    });
 });
 
 
-var copyTask = function () {
+var copyTask = function() {
     return projectDir.copyAsync('app', destDir.path(), {
         overwrite: true,
         matching: paths.toCopy
@@ -50,28 +52,30 @@ gulp.task('copy', ['clean'], copyTask);
 gulp.task('copy-watch', copyTask);
 
 
-var transpileTask = function () {
+var transpileTask = function() {
     return gulp.src(paths.jsCodeToTranspile)
-    .pipe(map(function(code, filename) {
-        var transpiled = esperanto.toAmd(code.toString(), { strict: true });
-        return transpiled.code;
-    }))
-    .pipe(gulp.dest(destDir.path()));
+        .pipe(map(function(code, filename) {
+            var transpiled = esperanto.toAmd(code.toString(), {
+                strict: true
+            });
+            return transpiled.code;
+        }))
+        .pipe(gulp.dest(destDir.path()));
 };
 gulp.task('transpile', ['clean'], transpileTask);
 gulp.task('transpile-watch', transpileTask);
 
 
-var sassTask = function () {
+var sassTask = function() {
     return gulp.src('app/stylesheets/main.scss')
-    .pipe(sass())
-    .pipe(gulp.dest(destDir.path('stylesheets')));
+        .pipe(sass())
+        .pipe(gulp.dest(destDir.path('stylesheets')));
 };
 gulp.task('sass', ['clean'], sassTask);
 gulp.task('sass-watch', sassTask);
 
 
-gulp.task('finalize', ['clean'], function () {
+gulp.task('finalize', ['clean'], function() {
     var manifest = srcDir.read('package.json', 'json');
     switch (utils.getEnvName()) {
         case 'development':
@@ -96,7 +100,7 @@ gulp.task('finalize', ['clean'], function () {
 });
 
 
-gulp.task('watch', function () {
+gulp.task('watch', function() {
     gulp.watch(paths.jsCodeToTranspile, ['transpile-watch']);
     gulp.watch(paths.toCopy, ['copy-watch']);
     gulp.watch('*.scss', ['sass-watch']);

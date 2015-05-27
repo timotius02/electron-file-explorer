@@ -1,15 +1,14 @@
 {
   "devDependencies": {
-    "electron-prebuilt": "^0.24.0",
-    "esperanto": "^0.6.17",
+    "electron-prebuilt": "^0.26.1",
+    "esperanto": "^0.7.0",
     "fs-jetpack": "^0.6.4",
-    "gulp": "^3.8.8",
-    "gulp-less": "^1.3.6",
+    "gulp": "^3.8.11",
     "gulp-sass": "^2.0.1",
-    "gulp-util": "^3.0.1",
-    "q": "^1.0.1",
+    "gulp-util": "^3.0.4",
+    "q": "^1.4.1",
     "vinyl-map": "^1.0.1",
-    "yargs": "^1.3.1"
+    "yargs": "^3.9.1"
   },
   "optionalDependencies": {
     "appdmg": "^0.3.1",
@@ -21,5 +20,6 @@
     "release": "./node_modules/.bin/gulp release --env=production",
     "start": "node ./tasks/start",
     "test": "node ./tasks/start --env=test"
-  }
+  },
+  "dependencies": {}
 }
