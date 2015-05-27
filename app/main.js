@@ -6,7 +6,7 @@ var env = require('./vendor/electron_boilerplate/env_config');
 var windowStateKeeper = require('./vendor/electron_boilerplate/window_state');
 
 var mainWindow;
-var DEBUG = true;
+var DEBUG = false;
 
 // Preserver of the window size and position between app launches.
 var mainWindowState = windowStateKeeper('main', {
