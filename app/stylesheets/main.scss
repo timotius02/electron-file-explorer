@@ -85,7 +85,7 @@ a {
             border-right: 1px solid $grey;
         }
         .table-header-items:nth-of-type(1) {
-            flex: 4;
+            flex: 3;
         }
     }
     #files-container {
@@ -98,7 +98,7 @@ a {
                 padding-left: 10px;
             }
             div:nth-of-type(1) {
-                flex: 4;
+                flex: 3;
             }
             &:hover {
                 background-color: $grey;
