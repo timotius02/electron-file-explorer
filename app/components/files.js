@@ -2,40 +2,36 @@ var React = require('react');
 var fs = require('fs');
 var path = require('path');
 var shell = require('shell');
+var Promise = require('bluebird');
+var join = Promise.join;
+Promise.promisifyAll(fs);
 
-var isWindows = process.platform === 'win32'
-var getHome =  isWindows ? process.env.USERPROFILE: process.env.HOME;
-
-
-var updateDir = function(dirPath) {
-	var filesData = [];
-    var files = fs.readdirSync(dirPath);
-    files.map(function(file) {
-        if (file.substring(0, 1) !== '.') {
+export var updateDir = function(dirPath, cb) {
+    var res = fs.readdirAsync(dirPath)
+        .filter(function(file) {
+            return file.substring(0, 1) !== '.';
+        })
+        .map(function(file) {
             var filePath = path.join(dirPath, file);
-            fs.stat(filePath, function(err, stats) {
-                if (err)
-                    console.log(err);
+            return fs.statAsync(filePath)
+            	.then(function(stats) {
+	                return {
+	                    fileName: file,
+	                    fileSize: stats.size,
+	                    fileType: stats.isFile() ? "File" : "Directory",
+	                    fileModified: stats.mtime.toLocaleString(),
+	                    filePath: filePath
+	                };
+	            });
 
-                filesData.push({
-                    fileName: file,
-                    fileSize: stats.size,
-                    fileType: stats.isFile() ? "File" : "Directory",
-                    fileModified: stats.mtime.toLocaleString(),
-                    filePath: filePath
-                });
-            });
-        }
-    });
-    return filesData;
+        })
+        .then(function(res) {
+            if (cb)
+                cb(res);
+        });
 }
 
-var filesData = updateDir(getHome);
-
 var File = React.createClass({
-	highlightFile: function(){
-
-	},
 	openFile: function(){
 		if(this.props.fileType === "file")
 			shell.openItem(this.props.filePath);
@@ -66,15 +62,15 @@ var File = React.createClass({
 
 export var FilesLayout = React.createClass({
 	getInitialState: function(){
-		return {filesData: filesData};
+		return {filesData: []};
 	},
-	componentDidMount: function(){
-		this.setState({filesData: filesData });
+	componentDidMount: function(files){
+		this.setState({filesData: this.props.files});
 	},
 	updateLayout: function(dirPath){
-		var filesData = updateDir(dirPath);
-		console.log(filesData);
-		this.setState({filesData: filesData});
+		updateDir(dirPath, function(filesData){
+			this.setState({filesData: filesData});
+		}.bind(this));
 	},
 	render: function() {
 		var fileList = this.state.filesData.map(function(fileInfo){
@@ -88,3 +84,6 @@ export var FilesLayout = React.createClass({
 		)
 	}
 });
+
+	
+
