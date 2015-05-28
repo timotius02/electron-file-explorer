@@ -5,6 +5,7 @@ var sass = require('gulp-sass');
 var esperanto = require('esperanto');
 var map = require('vinyl-map');
 var jetpack = require('fs-jetpack');
+var react= require('gulp-react');
 
 var utils = require('./utils');
 
@@ -55,6 +56,7 @@ gulp.task('copy-watch', copyTask);
 
 var transpileTask = function() {
     return gulp.src(paths.jsCodeToTranspile)
+        .pipe(react({harmony: true, es6module: true}))
         .pipe(map(function(code, filename) {
             var transpiled = esperanto.toAmd(code.toString(), {
                 strict: true

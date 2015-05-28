@@ -4,6 +4,7 @@
     "esperanto": "^0.7.0",
     "fs-jetpack": "^0.6.4",
     "gulp": "^3.8.11",
+    "gulp-react": "^3.0.1",
     "gulp-sass": "^2.0.1",
     "gulp-util": "^3.0.4",
     "q": "^1.4.1",
