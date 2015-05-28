@@ -7,7 +7,6 @@
     var remote = require('remote');
     var Menu = remote.require('menu');
     var MenuItem = remote.require('menu-item');
-
     var cut = new MenuItem({
         label: "Cut",
         click: function () {

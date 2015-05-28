@@ -70,7 +70,7 @@ a {
 
 #main-container {
     width: calc(100% - 150px);
-    @include card(2);
+    // @include card(2);
     overflow: scroll;
     header {
         background-color: $blue;
@@ -95,10 +95,11 @@ a {
         .files {
             display: flex;
             padding: 10px 0;
+            -webkit-user-select: none;
             div {
                 flex: 1;
                 overflow: hidden;
-                padding-left: 10px;
+                padding-left: 20px;
             }
             div:nth-of-type(1) {
                 flex: 3;
