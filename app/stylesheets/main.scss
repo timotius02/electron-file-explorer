@@ -32,7 +32,6 @@ a {
     text-decoration: none;
 }
 
-
 .container {
     height: 100%;
     display: flex;
@@ -106,6 +105,12 @@ a {
             }
             &:hover {
                 background-color: $grey;
+            }
+        }
+        .selected {
+            background-color: darken($grey, 10%);
+            &:hover {
+                background-color: darken($grey, 10%);
             }
         }
     }

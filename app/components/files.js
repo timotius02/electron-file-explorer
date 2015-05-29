@@ -33,11 +33,15 @@ export var updateDir = function(dirPath, cb) {
 
 var File = React.createClass({
 	openFile: function(){
-		if(this.props.fileType === "file")
+		if(this.props.fileType === "File")
 			shell.openItem(this.props.filePath);
 		else {
 			this.props.newDir(this.props.filePath);
 		}
+	},
+	setSelected: function(){
+		var index = this.props.index;
+		this.props.highlight(index);
 	},
 	render: function(){
 		var size = "";
@@ -49,7 +53,7 @@ var File = React.createClass({
 		    size = this.props.fileSize + " B"; // Bytes
 
 		return (
-			<div className="files" onDoubleClick={this.openFile}>
+			<div className="files" onDoubleClick={this.openFile} onClick={this.setSelected}>
 	            <div className="filename">{this.props.fileName}</div>
 	            <div className="filesize">{size}</div>
 	            <div className="filetype">{this.props.fileType}</div>
@@ -61,11 +65,22 @@ var File = React.createClass({
 
 
 export var FilesLayout = React.createClass({
-	getInitialState: function(){
-		return {filesData: []};
+	getInitialState: function() {
+	    return {
+	        filesData: [],
+	        selected: null
+	    };
 	},
 	componentDidMount: function(files){
 		this.setState({filesData: this.props.files});
+	},
+	highlight: function(index){
+		if(this.state.selected !== null) {
+			React.findDOMNode(this.refs["file" + this.state.selected]).className ="files";
+		}
+
+		React.findDOMNode(this.refs["file" + index]).className = "files selected";
+		this.setState({selected: index});
 	},
 	updateLayout: function(dirPath){
 		updateDir(dirPath, function(filesData){
@@ -73,8 +88,9 @@ export var FilesLayout = React.createClass({
 		}.bind(this));
 	},
 	render: function() {
+		var index = 0;
 		var fileList = this.state.filesData.map(function(fileInfo){
-			return <File {...fileInfo} newDir={this.updateLayout}/>
+			return <File {...fileInfo} newDir={this.updateLayout} ref={"file" + index} index={index++} highlight={this.highlight}/>
 		}.bind(this));
 
 		return (
