@@ -32,14 +32,14 @@ export var updateDir = function(dirPath, cb) {
 }
 
 var File = React.createClass({
-	openFile: function(){
+	_openFile: function(){
 		if(this.props.fileType === "File")
 			shell.openItem(this.props.filePath);
 		else {
 			this.props.newDir(this.props.filePath);
 		}
 	},
-	setSelected: function(){
+	_setSelected: function(){
 		var index = this.props.index;
 		this.props.highlight(index);
 	},
@@ -53,7 +53,7 @@ var File = React.createClass({
 		    size = this.props.fileSize + " B"; // Bytes
 
 		return (
-			<div className="files" onDoubleClick={this.openFile} onClick={this.setSelected}>
+			<div className="files" onDoubleClick={this._openFile} onClick={this._setSelected}>
 	            <div className="filename">{this.props.fileName}</div>
 	            <div className="filesize">{size}</div>
 	            <div className="filetype">{this.props.fileType}</div>
@@ -68,19 +68,24 @@ export var FilesLayout = React.createClass({
 	getInitialState: function() {
 	    return {
 	        filesData: [],
-	        selected: null
+	        selected: -1
 	    };
 	},
 	componentDidMount: function(files){
 		this.setState({filesData: this.props.files});
 	},
-	highlight: function(index){
-		if(this.state.selected !== null) {
+	_highlight: function(index){
+		if(this.state.selected !== -1) {
 			React.findDOMNode(this.refs["file" + this.state.selected]).className ="files";
 		}
-
-		React.findDOMNode(this.refs["file" + index]).className = "files selected";
-		this.setState({selected: index});
+		
+		if(this.state.selected === index) {
+			this.setState({selected: -1});
+		}
+		else {
+			React.findDOMNode(this.refs["file" + index]).className = "files selected";
+			this.setState({selected: index});
+		}
 	},
 	updateLayout: function(dirPath){
 		updateDir(dirPath, function(filesData){
@@ -90,7 +95,7 @@ export var FilesLayout = React.createClass({
 	render: function() {
 		var index = 0;
 		var fileList = this.state.filesData.map(function(fileInfo){
-			return <File {...fileInfo} newDir={this.updateLayout} ref={"file" + index} index={index++} highlight={this.highlight}/>
+			return <File {...fileInfo} newDir={this.updateLayout} ref={"file" + index} index={index++} highlight={this._highlight}/>
 		}.bind(this));
 
 		return (
