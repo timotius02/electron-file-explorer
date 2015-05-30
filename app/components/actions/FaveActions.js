@@ -15,5 +15,3 @@ export var FaveActions = {
     })
   }
 };
-
-// export FaveActions;

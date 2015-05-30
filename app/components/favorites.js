@@ -1,6 +1,6 @@
 var React = require('react');
-import { FaveStore } from './stores/FaveStore.js';
-import { FaveActions } from './actions/FaveActions.js';
+import { FaveStore } from './stores/FaveStore';
+import { FaveActions } from './actions/FaveActions';
 
 var FavoriteItems = React.createClass({
 	_setSelected: function(){
@@ -15,6 +15,7 @@ var FavoriteItems = React.createClass({
 	}
 });
 
+
 export var Favorites = React.createClass({
 	getInitialState: function() {
 	    return {
@@ -22,8 +23,19 @@ export var Favorites = React.createClass({
 	        selected: "User"
 	    };
 	},
+	componentDidMount: function() {
+	    FaveStore.addChangeListener(this._onChange);
+    },
+    componentWillUnmount: function() {
+        FaveStore.removeChangeListener(this._onChange);
+    },
 	_highlight: function(selected){
 		this.setState({selected: selected});
+	},
+	_onChange: function() {
+	    this.setState({
+	        items: FaveStore.getList()
+	    })
 	},
 	render: function(){
 		var faveList = this.state.items.map(function(item){

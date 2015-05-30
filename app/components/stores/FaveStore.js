@@ -4,15 +4,18 @@ var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
+
 var _faveStore = {
-    list: ['AirDrop', 'Applications', 'Desktop', 'Documents', 'Downloads', 'Pictures', 'User']
+    list: ['User']
 };
 
 var addItem = function(item) {
     _faveStore.list.push(item);
 };
 
-var removeItem = function(index) {
+var removeItem = function(item) {
+	console.log(item);
+	var index = _faveStore.list.indexOf(item);
     _faveStore.list.splice(index, 1);
 }
 
@@ -28,16 +31,18 @@ export var FaveStore = objectAssign({}, EventEmitter.prototype, {
     }
 });
 
+FaveStore.setMaxListeners(0);
+
 FaveDispatcher.register(function(payload) {
     var action = payload.action;
     switch (action.actionType) {
         case FaveConstants.ADD_ITEM:
             addItem(action.data);
-            faveStore.emit(CHANGE_EVENT);
+            FaveStore.emit(CHANGE_EVENT);
             break;
         case FaveConstants.REMOVE_ITEM:
             removeItem(action.data);
-            faveStore.emit(CHANGE_EVENT);
+            FaveStore.emit(CHANGE_EVENT);
             break;
         default:
             return true;
