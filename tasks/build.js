@@ -5,7 +5,7 @@ var sass = require('gulp-sass');
 var esperanto = require('esperanto');
 var map = require('vinyl-map');
 var jetpack = require('fs-jetpack');
-var react= require('gulp-react');
+var react = require('gulp-react');
 
 var utils = require('./utils');
 

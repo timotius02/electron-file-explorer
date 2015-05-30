@@ -1,7 +1,6 @@
 var React = require('react');
-import { updateDir } from './files'
-
-var _favorites = ['AirDrop', 'Applications', 'Desktop', 'Documents', 'Downloads', 'Pictures','User'];
+import { FaveStore } from './stores/FaveStore.js';
+import { FaveActions } from './actions/FaveActions.js';
 
 var FavoriteItems = React.createClass({
 	_setSelected: function(){
@@ -19,7 +18,7 @@ var FavoriteItems = React.createClass({
 export var Favorites = React.createClass({
 	getInitialState: function() {
 	    return {
-	        items: _favorites,
+	        items: FaveStore.getList(),
 	        selected: "User"
 	    };
 	},

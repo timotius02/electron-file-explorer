@@ -16,7 +16,6 @@ var envName = window.env.name;
 var isWindows = process.platform === 'win32'
 var getHome =  isWindows ? process.env.USERPROFILE: process.env.HOME;
 
-
 updateDir(getHome, function(filesData){
 	React.render(<FilesLayout files={filesData}/>, document.getElementById('files-container'));
 });
