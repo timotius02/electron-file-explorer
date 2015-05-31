@@ -14,7 +14,6 @@ var addItem = function(item) {
 };
 
 var removeItem = function(item) {
-	console.log(item);
 	var index = _faveStore.list.indexOf(item);
     _faveStore.list.splice(index, 1);
 }

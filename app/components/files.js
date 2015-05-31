@@ -1,45 +1,16 @@
 var React = require('react');
-var fs = require('fs');
-var path = require('path');
 var shell = require('shell');
-var Promise = require('bluebird');
-var join = Promise.join;
-Promise.promisifyAll(fs);
 
 import { FaveActions } from './actions/FaveActions';
 import { FaveStore } from './stores/FaveStore';
-
-export var updateDir = function(dirPath, cb) {
-    var res = fs.readdirAsync(dirPath)
-        .filter(function(file) {
-            return file.substring(0, 1) !== '.';
-        })
-        .map(function(file) {
-            var filePath = path.join(dirPath, file);
-            return fs.statAsync(filePath)
-            	.then(function(stats) {
-	                return {
-	                    fileName: file,
-	                    fileSize: stats.size,
-	                    fileType: stats.isFile() ? "File" : "Directory",
-	                    fileModified: stats.mtime.toLocaleString(),
-	                    filePath: filePath
-	                };
-	            });
-
-        })
-        .then(function(res) {
-            if (cb)
-                cb(res);
-        });
-}
+import { FileActions } from './actions/FileActions';
+import { FileStore, updateDir } from './stores/FileStore'
 
 var FaveButton = React.createClass({
 	_addFave: function(){
 		FaveActions.addItem(this.props.dirName);
 	},
 	_removeFave: function(){
-		console.log("hello");
 		FaveActions.removeItem(this.props.dirName);
 	},
 	render: function(){
@@ -119,9 +90,8 @@ var Directory = React.createClass({
 		else
 		    size = this.props.fileSize + " B"; // Bytes
 
-		// Add favorites icon if it is a directory
-		var icon = this.props.fileType === "Directory" ? 
-			<FaveButton dirName={this.props.fileName} favorited={this.state.favorited}/> : null;
+		// Add favorites icon to directory
+		var icon = <FaveButton dirName={this.props.fileName} favorited={this.state.favorited}/>;
 
 		return (
 			<div className="files" onDoubleClick={this._openDir} onClick={this._setSelected}>
@@ -134,6 +104,8 @@ var Directory = React.createClass({
 	}
 });
 
+var isWindows = process.platform === 'win32'
+var getHome =  isWindows ? process.env.USERPROFILE: process.env.HOME;
 
 export var FilesLayout = React.createClass({
 	getInitialState: function() {
@@ -143,7 +115,14 @@ export var FilesLayout = React.createClass({
 	    };
 	},
 	componentDidMount: function(){
-		this.setState({filesData: this.props.files});
+		updateDir(getHome, function(filesData){
+			this.setState({filesData: filesData});
+			FileActions.newDir(filesData);
+		}.bind(this));
+		FileStore.addChangeListener(this._onChange);
+	},
+	componentWillUnmount:function(){
+		FileStore.removeChangeListener(this._onChange);
 	},
 	_highlight: function(index){
 		if(this.state.selected !== -1) {
@@ -160,8 +139,11 @@ export var FilesLayout = React.createClass({
 	},
 	_updateLayout: function(dirPath){
 		updateDir(dirPath, function(filesData){
-			this.setState({filesData: filesData});
+			FileActions.newDir(filesData);
 		}.bind(this));
+	},
+	_onChange: function(){
+		this.setState({filesData: FileStore.getList()});
 	},
 	render: function() {
 		var index = 0;
