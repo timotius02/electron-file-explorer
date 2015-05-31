@@ -77,6 +77,15 @@ a {
         overflow: auto;
         padding: 1% 0;
         padding-left: 5%;
+        display: flex;
+        h3 {
+            flex: 10;
+        }
+        div {
+            flex: 1;
+            padding-top: 12px;
+        }
+
     }
     #table-header {
         display: flex;

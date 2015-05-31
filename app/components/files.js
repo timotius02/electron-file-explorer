@@ -4,7 +4,8 @@ var shell = require('shell');
 import { FaveActions } from './actions/FaveActions';
 import { FaveStore } from './stores/FaveStore';
 import { FileActions } from './actions/FileActions';
-import { FileStore, updateDir } from './stores/FileStore'
+import { FileStore, updateDir } from './stores/FileStore';
+import { pushPath } from './Header';
 
 var FaveButton = React.createClass({
 	_addFave: function(){
@@ -15,12 +16,11 @@ var FaveButton = React.createClass({
 	},
 	render: function(){
 		if (this.props.favorited)
-			return <i className="fa fa-star fa-lg" onClick={this._removeFave}></i>;
+			return <i className='fa fa-star fa-lg' onClick={this._removeFave}></i>;
 		else 
-			return <i className="fa fa-star-o fa-lg" onClick={this._addFave}></i>;
+			return <i className='fa fa-star-o fa-lg' onClick={this._addFave}></i>;
 	}
 });
-
 
 var File = React.createClass({
 	_openFile: function(){
@@ -33,20 +33,20 @@ var File = React.createClass({
 	},
 
 	render: function(){
-		var size = "";
+		var size = '';
 		if ( Math.floor(this.props.fileSize / 1000000) !== 0) // Megabytes
-		    size = Math.floor(this.props.fileSize / 1000000) + " M";
+		    size = Math.floor(this.props.fileSize / 1000000) + ' M';
 		else if (Math.floor(this.props.fileSize / 1000) !== 0)
-		    size = Math.floor(this.props.fileSize / 1000) + " K"; // Kilobytes
+		    size = Math.floor(this.props.fileSize / 1000) + ' K'; // Kilobytes
 		else
-		    size = this.props.fileSize + " B"; // Bytes
+		    size = this.props.fileSize + ' B'; // Bytes
 
 		return (
-			<div className="files" onDoubleClick={this._openFile} onClick={this._setSelected}>
-	            <div className="filename">  {this.props.fileName}</div>
-	            <div className="filesize">{size}</div>
-	            <div className="filetype">{this.props.fileType}</div>
-	            <div className="filemodified">{this.props.fileModified}</div>
+			<div className='files' onDoubleClick={this._openFile} onClick={this._setSelected}>
+	            <div className='filename'>  {this.props.fileName}</div>
+	            <div className='filesize'>{size}</div>
+	            <div className='filetype'>{this.props.fileType}</div>
+	            <div className='filemodified'>{this.props.fileModified}</div>
 	        </div>
 		)
 	}
@@ -74,23 +74,23 @@ var Directory = React.createClass({
 		this.setState({ favorited: favorited });
 	},
 	render: function(){
-		var size = "";
+		var size = '';
 		if ( Math.floor(this.props.fileSize / 1000000) !== 0) // Megabytes
-		    size = Math.floor(this.props.fileSize / 1000000) + " M";
+		    size = Math.floor(this.props.fileSize / 1000000) + ' M';
 		else if (Math.floor(this.props.fileSize / 1000) !== 0)
-		    size = Math.floor(this.props.fileSize / 1000) + " K"; // Kilobytes
+		    size = Math.floor(this.props.fileSize / 1000) + ' K'; // Kilobytes
 		else
-		    size = this.props.fileSize + " B"; // Bytes
+		    size = this.props.fileSize + ' B'; // Bytes
 
 		// Add favorites icon to directory
 		var star = <FaveButton dirName={this.props.fileName} dirPath={this.props.filePath} favorited={this.props.favorited}/>;
 
 		return (
-			<div className="files" onDoubleClick={this._openDir} onClick={this._setSelected}>
-	            <div className="filename"> {star} {this.props.fileName}</div>
-	            <div className="filesize">{size}</div>
-	            <div className="filetype">{this.props.fileType}</div>
-	            <div className="filemodified">{this.props.fileModified}</div>
+			<div className='files' onDoubleClick={this._openDir} onClick={this._setSelected}>
+	            <div className='filename'> {star} {this.props.fileName}</div>
+	            <div className='filesize'>{size}</div>
+	            <div className='filetype'>{this.props.fileType}</div>
+	            <div className='filemodified'>{this.props.fileModified}</div>
 	        </div>
 		)
 	}
@@ -107,6 +107,7 @@ export var FilesLayout = React.createClass({
 	    };
 	},
 	componentDidMount: function(){
+		pushPath(getHome);
 		updateDir(getHome, function(filesData){
 			this.setState({filesData: filesData});
 			FileActions.newDir(filesData);
@@ -119,19 +120,20 @@ export var FilesLayout = React.createClass({
 	},
 	_highlight: function(index){
 		if(this.state.selected !== -1) {
-			React.findDOMNode(this.refs["file" + this.state.selected]).className ="files";
+			React.findDOMNode(this.refs['file' + this.state.selected]).className ='files';
 		}
 		
 		if(this.state.selected === index) {
 			this.setState({selected: -1});
 		}
 		else {
-			React.findDOMNode(this.refs["file" + index]).className = "files selected";
+			React.findDOMNode(this.refs['file' + index]).className = 'files selected';
 			this.setState({selected: index});
 		}
 	},
 	_updateLayout: function(dirPath){
 		updateDir(dirPath, function(filesData){
+			pushPath(dirPath);
 			FileActions.newDir(filesData);
 		}.bind(this));
 	},
@@ -141,17 +143,17 @@ export var FilesLayout = React.createClass({
 	render: function() {
 		var index = 0;
 		var fileList = this.state.filesData.map(function(fileInfo){
-			if(fileInfo.fileType === "File")
-				return <File {...fileInfo} ref={"file" + index} index={index++} highlight={this._highlight}/>;
+			if(fileInfo.fileType === 'File')
+				return <File {...fileInfo} ref={'file' + index} index={index++} highlight={this._highlight}/>;
 			else {
 				var favorited = FaveStore.getPath(fileInfo.fileName) === fileInfo.filePath;
 
-				return <Directory {...fileInfo} ref={"file" + index} index={index++} highlight={this._highlight} openDir={this._updateLayout} favorited={favorited}/>
+				return <Directory {...fileInfo} ref={'file' + index} index={index++} highlight={this._highlight} openDir={this._updateLayout} favorited={favorited}/>
 			}
 		}.bind(this));
 
 		return (
-			<div id="files-container">
+			<div id='files-container'>
 				{fileList}
 			</div>		
 		)

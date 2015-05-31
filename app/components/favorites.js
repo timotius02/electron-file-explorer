@@ -3,6 +3,7 @@ import { FaveStore } from './stores/FaveStore';
 import { FaveActions } from './actions/FaveActions';
 import { updateDir } from './stores/FileStore';
 import { FileActions } from './actions/FileActions';
+import { pushPath } from './Header';
 
 var FavoriteItems = React.createClass({
 	_setSelected: function(){
@@ -11,11 +12,12 @@ var FavoriteItems = React.createClass({
 		var dirPath = FaveStore.getPath(this.props.name);
 		updateDir(dirPath, function(filesData){
 			FileActions.newDir(filesData);
+			pushPath(dirPath);
 		});
 	},
 	render: function(){
 		if(this.props.selected)
-			return  <li className="selected" onClick={this._setSelected}>{ this.props.name}</li>;
+			return  <li className='selected' onClick={this._setSelected}>{ this.props.name}</li>;
 		else 
 			return <li onClick={this._setSelected}>{ this.props.name}</li>;
 		
@@ -27,7 +29,7 @@ export var Favorites = React.createClass({
 	getInitialState: function() {
 	    return {
 	        items: FaveStore.getList(),
-	        selected: "User"
+	        selected: 'User'
 	    };
 	},
 	componentDidMount: function() {

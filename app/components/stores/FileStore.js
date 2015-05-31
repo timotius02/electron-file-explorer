@@ -22,7 +22,7 @@ export var updateDir = function(dirPath, cb) {
                     return {
                         fileName: file,
                         fileSize: stats.size,
-                        fileType: stats.isFile() ? "File" : "Directory",
+                        fileType: stats.isFile() ? 'File' : 'Directory',
                         fileModified: stats.mtime.toLocaleString(),
                         filePath: filePath
                     };
