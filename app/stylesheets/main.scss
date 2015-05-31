@@ -106,6 +106,9 @@ a {
             &:hover {
                 background-color: $grey;
             }
+            i {
+                padding-right: 7px;
+            }
         }
         .selected {
             background-color: darken($grey, 10%);

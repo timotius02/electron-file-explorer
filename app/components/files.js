@@ -83,11 +83,11 @@ var Directory = React.createClass({
 		    size = this.props.fileSize + " B"; // Bytes
 
 		// Add favorites icon to directory
-		var icon = <FaveButton dirName={this.props.fileName} dirPath={this.props.filePath} favorited={this.props.favorited}/>;
+		var star = <FaveButton dirName={this.props.fileName} dirPath={this.props.filePath} favorited={this.props.favorited}/>;
 
 		return (
 			<div className="files" onDoubleClick={this._openDir} onClick={this._setSelected}>
-	            <div className="filename"> {icon} {this.props.fileName}</div>
+	            <div className="filename"> {star} {this.props.fileName}</div>
 	            <div className="filesize">{size}</div>
 	            <div className="filetype">{this.props.fileType}</div>
 	            <div className="filemodified">{this.props.fileModified}</div>
@@ -111,6 +111,7 @@ export var FilesLayout = React.createClass({
 			this.setState({filesData: filesData});
 			FileActions.newDir(filesData);
 		}.bind(this));
+
 		FileStore.addChangeListener(this._onChange);
 	},
 	componentWillUnmount:function(){
@@ -143,7 +144,7 @@ export var FilesLayout = React.createClass({
 			if(fileInfo.fileType === "File")
 				return <File {...fileInfo} ref={"file" + index} index={index++} highlight={this._highlight}/>;
 			else {
-				var favorited = FaveStore.getPath(fileInfo.fileName)? true: false;
+				var favorited = FaveStore.getPath(fileInfo.fileName) === fileInfo.filePath;
 
 				return <Directory {...fileInfo} ref={"file" + index} index={index++} highlight={this._highlight} openDir={this._updateLayout} favorited={favorited}/>
 			}
