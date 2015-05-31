@@ -1,10 +1,17 @@
 var React = require('react');
 import { FaveStore } from './stores/FaveStore';
 import { FaveActions } from './actions/FaveActions';
+import { updateDir } from './stores/FileStore';
+import { FileActions } from './actions/FileActions';
 
 var FavoriteItems = React.createClass({
 	_setSelected: function(){
 		this.props.highlight(this.props.name);
+
+		var dirPath = FaveStore.getPath(this.props.name);
+		updateDir(dirPath, function(filesData){
+			FileActions.newDir(filesData);
+		});
 	},
 	render: function(){
 		if(this.props.selected)

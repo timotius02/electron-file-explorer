@@ -10,14 +10,5 @@ import { updateDir } from './components/stores/FileStore'
 // window.env contains data from config/env_XXX.json file.
 var envName = window.env.name;
 
-var isWindows = process.platform === 'win32'
-var getHome =  isWindows ? process.env.USERPROFILE: process.env.HOME;
-
-// Set to unlimited event listeners
-require('events').EventEmitter.prototype._maxListeners = 100;
-
-
-	React.render(<FilesLayout />, document.getElementById('files-container'));
-
-
+React.render(<FilesLayout />, document.getElementById('files-container'));
 React.render(<Favorites />, document.getElementById('sidebar'));

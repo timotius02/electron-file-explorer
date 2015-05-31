@@ -4,19 +4,21 @@ var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
+var isWindows = process.platform === 'win32'
+var getHome =  isWindows ? process.env.USERPROFILE: process.env.HOME;
 
 var _faveStore = {
-    list: ['User']
+    list: {User: getHome}
 };
 
-var addItem = function(item) {
-    _faveStore.list.push(item);
+var addItem = function(key, value) {
+    _faveStore.list[key] = value;
 };
 
-var removeItem = function(item) {
-	var index = _faveStore.list.indexOf(item);
-    _faveStore.list.splice(index, 1);
+var removeItem = function(key) {
+    delete _faveStore.list[key];
 }
+
 
 export var FaveStore = objectAssign({}, EventEmitter.prototype, {
     addChangeListener: function(cb) {
@@ -26,7 +28,10 @@ export var FaveStore = objectAssign({}, EventEmitter.prototype, {
         this.removeListener(CHANGE_EVENT, cb);
     },
     getList: function() {
-        return _faveStore.list;
+        return Object.keys(_faveStore.list);
+    },
+    getPath: function(key) {
+        return _faveStore.list[key];
     }
 });
 
@@ -36,7 +41,7 @@ FaveDispatcher.register(function(payload) {
     var action = payload.action;
     switch (action.actionType) {
         case FaveConstants.ADD_ITEM:
-            addItem(action.data);
+            addItem(action.key, action.value);
             FaveStore.emit(CHANGE_EVENT);
             break;
         case FaveConstants.REMOVE_ITEM:

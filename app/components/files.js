@@ -8,7 +8,8 @@ import { FileStore, updateDir } from './stores/FileStore'
 
 var FaveButton = React.createClass({
 	_addFave: function(){
-		FaveActions.addItem(this.props.dirName);
+		console.log(this.props.dirPath);
+		FaveActions.addItem(this.props.dirName, this.props.dirPath);
 	},
 	_removeFave: function(){
 		FaveActions.removeItem(this.props.dirName);
@@ -91,7 +92,7 @@ var Directory = React.createClass({
 		    size = this.props.fileSize + " B"; // Bytes
 
 		// Add favorites icon to directory
-		var icon = <FaveButton dirName={this.props.fileName} favorited={this.state.favorited}/>;
+		var icon = <FaveButton dirName={this.props.fileName} dirPath={this.props.filePath} favorited={this.state.favorited}/>;
 
 		return (
 			<div className="files" onDoubleClick={this._openDir} onClick={this._setSelected}>

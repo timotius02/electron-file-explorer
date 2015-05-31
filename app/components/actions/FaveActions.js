@@ -2,10 +2,11 @@ import { FaveDispatcher } from '../dispatcher/FaveDispatcher';
 import { FaveConstants } from '../constants/FaveConstants';
 
 export var FaveActions = {
-  addItem: function(item){
+  addItem: function(key, value){
     FaveDispatcher.handleAction({
       actionType: FaveConstants.ADD_ITEM,
-      data: item
+      key: key, 
+      value: value
     });
   },
   removeItem: function(index){

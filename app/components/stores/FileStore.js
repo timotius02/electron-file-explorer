@@ -36,7 +36,6 @@ export var updateDir = function(dirPath, cb) {
 }
 
 
-
 var _fileStore = {
     list: []
 };
