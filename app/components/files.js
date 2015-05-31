@@ -8,7 +8,6 @@ import { FileStore, updateDir } from './stores/FileStore'
 
 var FaveButton = React.createClass({
 	_addFave: function(){
-		console.log(this.props.dirPath);
 		FaveActions.addItem(this.props.dirName, this.props.dirPath);
 	},
 	_removeFave: function(){
@@ -54,14 +53,6 @@ var File = React.createClass({
 });
 
 var Directory = React.createClass({
-    getInitialState: function() {
-        var favorited = false;
-        if (FaveStore.getList().indexOf(this.props.fileName) !== -1)
-            favorited = true;
-        return {
-            favorited: favorited
-        };
-    },
     componentDidMount: function() {
 		FaveStore.addChangeListener(this._onChange);
     },
@@ -92,7 +83,7 @@ var Directory = React.createClass({
 		    size = this.props.fileSize + " B"; // Bytes
 
 		// Add favorites icon to directory
-		var icon = <FaveButton dirName={this.props.fileName} dirPath={this.props.filePath} favorited={this.state.favorited}/>;
+		var icon = <FaveButton dirName={this.props.fileName} dirPath={this.props.filePath} favorited={this.props.favorited}/>;
 
 		return (
 			<div className="files" onDoubleClick={this._openDir} onClick={this._setSelected}>
@@ -151,8 +142,11 @@ export var FilesLayout = React.createClass({
 		var fileList = this.state.filesData.map(function(fileInfo){
 			if(fileInfo.fileType === "File")
 				return <File {...fileInfo} ref={"file" + index} index={index++} highlight={this._highlight}/>;
-			else 
-				return <Directory {...fileInfo} ref={"file" + index} index={index++} highlight={this._highlight} openDir={this._updateLayout} />
+			else {
+				var favorited = FaveStore.getPath(fileInfo.fileName)? true: false;
+
+				return <Directory {...fileInfo} ref={"file" + index} index={index++} highlight={this._highlight} openDir={this._updateLayout} favorited={favorited}/>
+			}
 		}.bind(this));
 
 		return (
