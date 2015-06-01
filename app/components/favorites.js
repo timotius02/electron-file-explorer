@@ -67,7 +67,7 @@ export var Favorites = React.createClass({
 		}.bind(this));
 
 		return (
-			<ul>{ faveList }</ul>
+			<ul><h3>Favorites</h3>{ faveList }</ul>
 		)
 	}
 });
