@@ -116,9 +116,11 @@ export var FilesLayout = React.createClass({
 		}.bind(this));
 
 		FileStore.addChangeListener(this._onChange);
+		FaveStore.addChangeListener(this._onFaveChange);
 	},
 	componentWillUnmount:function(){
 		FileStore.removeChangeListener(this._onChange);
+		FaveStore.removeChangeListener(this._onFaveChange);
 	},
 	_highlight: function(index){
 		if(this.state.selected !== -1) {
@@ -142,6 +144,9 @@ export var FilesLayout = React.createClass({
 	},
 	_onChange: function(){
 		this.setState({filesData: FileStore.getList()});
+	},
+	_onFaveChange: function(){
+		this.forceUpdate();
 	},
 	render: function() {
 		var index = 0;

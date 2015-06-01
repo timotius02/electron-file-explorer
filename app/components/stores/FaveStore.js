@@ -1,3 +1,4 @@
+var Path = require('path');
 import { FaveDispatcher } from '../dispatcher/FaveDispatcher';
 import { FaveConstants } from '../constants/FaveConstants';
 var objectAssign = require('react/lib/Object.assign');
@@ -6,10 +7,13 @@ var CHANGE_EVENT = 'change';
 
 var isWindows = process.platform === 'win32'
 var getHome =  isWindows ? process.env.USERPROFILE: process.env.HOME;
+var userName = Path.basename(getHome);
 
 var _faveStore = {
-    list: {User: getHome}
+    list: {}
 };
+
+_faveStore.list[userName] = getHome;
 
 var addItem = function(key, value) {
     _faveStore.list[key] = value;

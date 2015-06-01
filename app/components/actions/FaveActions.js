@@ -9,10 +9,10 @@ export var FaveActions = {
       value: value
     });
   },
-  removeItem: function(index){
+  removeItem: function(dirName){
     FaveDispatcher.handleAction({
       actionType: FaveConstants.REMOVE_ITEM,
-      data: index
+      data: dirName
     })
   }
 };
