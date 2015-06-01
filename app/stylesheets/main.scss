@@ -69,8 +69,15 @@ a {
 
 #main-container {
     width: calc(100% - 150px);
-    // @include card(2);
+    @include card(2);
     overflow: scroll;
+    #main-header {
+        position: fixed;
+        height: 100px;
+        top: 0;
+        width: calc(100% - 150px);
+        z-index: 100;
+    }
     header {
         background-color: $blue;
         color: $white;
@@ -85,9 +92,9 @@ a {
             flex: 1;
             padding-top: 12px;
         }
-
     }
     #table-header {
+        background-color: $white;
         display: flex;
         border-bottom: 1px solid $grey;
         .table-header-items {
@@ -100,6 +107,7 @@ a {
         }
     }
     #files-container {
+        margin-top: 100px;
         .files {
             display: flex;
             padding: 10px 0;
