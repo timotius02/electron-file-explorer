@@ -2,9 +2,7 @@
 
 A file explorer built using Electron (formerly Atom Shell), with React + Flux
 
-![Screenshot](https://github.com/postcasio/hearthdash/raw/master/images/game.png)
-
-![Deck editor](https://github.com/postcasio/hearthdash/raw/master/images/deck.png)
+![Screenshot](images/file-explorer.png?raw=true)
 
 ## Features
 
