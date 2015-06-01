@@ -1,8 +1,8 @@
 {
-  "name": "electron-boilerplate",
-  "productName": "Electron Boilerplate",
-  "identifier": "com.example.electron-boilerplate",
-  "description": "Starter for your Electron application. Out of the box ready for serious stuff.",
+  "name": "electron-file-explorer",
+  "productName": "Electron File Explorer",
+  "identifier": "com.example.electron-file-explorer",
+  "description": "A File Explorer built using Electron, React, and Flux",
   "version": "0.1.0",
   "author": "Timotius Sitorus",
   "main": "main.js",
