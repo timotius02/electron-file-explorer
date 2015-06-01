@@ -1,4 +1,5 @@
 var React = require('react');
+var Path = require('path');
 import { FaveStore } from './stores/FaveStore';
 import { FaveActions } from './actions/FaveActions';
 import { updateDir } from './stores/FileStore';
@@ -11,6 +12,7 @@ var FavoriteItems = React.createClass({
 
 		var dirPath = FaveStore.getPath(this.props.name);
 		updateDir(dirPath, function(filesData){
+			document.getElementById('dirName').innerHTML = Path.basename(dirPath);
 			FileActions.newDir(filesData);
 			pushPath(dirPath);
 		});

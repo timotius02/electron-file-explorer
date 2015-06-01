@@ -1,4 +1,5 @@
 var React = require('react');
+var Path = require('path');
 
 import { FileActions } from './actions/FileActions';
 import { updateDir } from './stores/FileStore';
@@ -15,6 +16,7 @@ export var Back = React.createClass({
 			_backStack.pop();
 			var target = _backStack.pop();
 			updateDir(target, function(filesData){
+				document.getElementById('dirName').innerHTML = Path.basename(target);
 				_backStack.push(target);
 				FileActions.newDir(filesData);	
 			});

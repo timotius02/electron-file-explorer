@@ -1,5 +1,6 @@
 var React = require('react');
 var shell = require('shell');
+var Path = require('path');
 
 import { FaveActions } from './actions/FaveActions';
 import { FaveStore } from './stores/FaveStore';
@@ -109,6 +110,7 @@ export var FilesLayout = React.createClass({
 	componentDidMount: function(){
 		pushPath(getHome);
 		updateDir(getHome, function(filesData){
+			document.getElementById('dirName').innerHTML = Path.basename(getHome);
 			this.setState({filesData: filesData});
 			FileActions.newDir(filesData);
 		}.bind(this));
@@ -133,6 +135,7 @@ export var FilesLayout = React.createClass({
 	},
 	_updateLayout: function(dirPath){
 		updateDir(dirPath, function(filesData){
+			document.getElementById('dirName').innerHTML = Path.basename(dirPath);
 			pushPath(dirPath);
 			FileActions.newDir(filesData);
 		}.bind(this));
