@@ -86,11 +86,20 @@ a {
         padding-left: 5%;
         display: flex;
         #dir {
-            flex: 10;
+            flex: 9;
         }
         #back {
+            padding-top: 5px;
             flex: 1;
-            padding-top: 12px;
+            
+            i {
+                padding: 7px 10px;
+                border-radius: 50%;
+            }
+            i:active{
+
+                background-color: darken($blue, 10%);
+            }
         }
     }
     #table-header {
