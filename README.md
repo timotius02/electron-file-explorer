@@ -1,25 +1,34 @@
 # Electron File Explorer
-Sample application using Electron
 
-> Work in Progress
+A file explorer built using Electron (formerly Atom Shell), with React + Flux
 
-# Quick start
+![Screenshot](https://github.com/postcasio/hearthdash/raw/master/images/game.png)
+
+![Deck editor](https://github.com/postcasio/hearthdash/raw/master/images/deck.png)
+
+## Features
+
+* Browse through directories and open files.
+* Navigate to previous directories using the "Back" button.
+* Easily add your favorite directories to the sidebar.
+* Easily customizable via Javascript + Sass
+
+## Quick start
 The only development dependency of this project is [Node.js](https://nodejs.org). So just make sure you have it installed.
 Then type few commands known to every Node developer...
 ```
-git clone https://github.com/szwacz/electron-boilerplate.git
-cd electron-boilerplate
+git clone https://github.com/timotius02/electron-file-explorer.git
+cd electron-file-explorer
 npm install
 npm start
 ```
-... and boom! You have running desktop application on your screen.
 
 # Structure of the project
 
 There are **two** `package.json` files:  
 
 #### 1. For development
-Sits on path: `electron-boilerplate/package.json`. Here you declare dependencies for your development environment and build scripts. **This file is not distributed with real application!**
+Sits on path: `electron-file-explorer/package.json`. Here you declare dependencies for the development environment and build scripts. **This file is not distributed with real application!**
 
 Also here you declare wersion of Electron runtime you want to use:
 ```json
@@ -28,8 +37,8 @@ Also here you declare wersion of Electron runtime you want to use:
 }
 ```
 
-#### 2. For your application
-Sits on path: `electron-boilerplate/app/package.json`. This is **real** manifest of your application. Declare your app dependencies here.
+#### 2. For the application
+Sits on path: `electron-file-explorer/app/package.json`. This is **real** manifest of the application. Declare the app dependencies here.
 
 ### Project's folders
 
@@ -40,21 +49,7 @@ Sits on path: `electron-boilerplate/app/package.json`. This is **real** manifest
 - `resources` - resources for particular operating system.
 - `tasks` - build and development environment scripts.
 
-
-# Development
-
-#### Installation
-
-```
-npm install
-```
-It will also download Electron runtime, and install dependencies for second `package.json` file inside `app` folder.
-
-#### Starting the app
-
-```
-npm start
-```
+### Notes for Development
 
 #### Module loader
 
@@ -67,53 +62,3 @@ import myOwnModule from './my_own_module';
 // (so you can still access all the goodness in npm).
 var moment = require('moment');
 ```
-
-#### Unit tests
-
-electron-boilerplate has preconfigured [jasmine](http://jasmine.github.io/2.0/introduction.html) unit test runner. To run it go with standard:
-```
-npm test
-```
-You don't have to declare paths to spec files in any particular place. The runner will search through the project for all `*.spec.js` files and include them automatically.
-
-
-# Making a release
-
-**Note:** There are various icon and bitmap files in `resources` directory. Those are used in installers and are intended to be replaced by your own graphics.
-
-To make ready for distribution installer use command:
-```
-npm run release
-```
-It will start the packaging process for operating system you are running this command on. Ready for distribution file will be outputted to `releases` directory.
-
-You can create Windows installer only when running on Windows, the same is true for Linux and OSX. So to generate all three installers you need all three operating systems.
-
-
-## Special precautions for Windows
-As installer [NSIS](http://nsis.sourceforge.net/Main_Page) is used. You have to install it (version 3.0), and add NSIS folder to PATH in Environment Variables, so it is reachable to scripts in this project (path should look something like `C:/Program Files (x86)/NSIS`).
-
-
-# License
-
-The MIT License (MIT)
-
-Copyright (c) 2015 Timotius Sitorus
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
