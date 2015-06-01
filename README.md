@@ -2,7 +2,7 @@
 
 A file explorer built using Electron (formerly Atom Shell), with React + Flux
 
-![Screenshot](images/file-explorer.png?raw=true)
+![Screenshot](images/electron-file-explorer.png?raw=true)
 
 ## Features
 

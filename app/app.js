@@ -1,5 +1,4 @@
 var fs = require('fs');
-var shell = require('shell');
 var React = require('react');
 var path = require('path');
 
