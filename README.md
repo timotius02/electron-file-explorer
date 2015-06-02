@@ -1,6 +1,8 @@
 # Electron File Explorer
 
-A file explorer built using Electron (formerly Atom Shell), with React + Flux. [OSX](https://github.com/timotius02/electron-file-explorer/releases/download/v0.1.0/electron-file-explorer_0.1.0.dmg)[Windows](https://github.com/timotius02/electron-file-explorer/releases/download/v0.1.0/electron-file-explorer_0.1.0.exe)
+A file explorer built using Electron (formerly Atom Shell), with React + Flux. 
+[Download for OSX](https://github.com/timotius02/electron-file-explorer/releases/download/v0.1.0/electron-file-explorer_0.1.0.dmg) 
+[Download for Windows](https://github.com/timotius02/electron-file-explorer/releases/download/v0.1.0/electron-file-explorer_0.1.0.exe)
 
 ![Screenshot](images/electron-file-explorer.png?raw=true)
 
