@@ -17,16 +17,28 @@ export var updateDir = function(dirPath, cb) {
         })
         .map(function(file) {
             var filePath = path.join(dirPath, file);
-            return fs.statAsync(filePath)
-                .then(function(stats) {
-                    return {
-                        fileName: file,
-                        fileSize: stats.size,
-                        fileType: stats.isFile() ? 'File' : 'Directory',
-                        fileModified: stats.mtime.toLocaleString(),
-                        filePath: filePath
-                    };
-                });
+            // NOTE: If the file is broken symbolic link, Unhandled rejection error will be raised.
+            if (fs.existsSync(filePath)) {
+                return fs.statAsync(filePath)
+                    .then(function(stats) {
+                            return {
+                                fileName: file,
+                                fileSize: stats.size,
+                                fileType: stats.isFile() ? 'File' : 'Directory',
+                                fileModified: stats.mtime.toLocaleString(),
+                                filePath: filePath
+                            };
+                    });
+            } else {
+                // FIXME This is ugly workaround of broken symbolic handling.
+                return {
+                    fileName: file + ' (broken)',
+                    fileSize: 0,
+                    fileType: 'File',
+                    fileModified: 0,
+                    filePath: filePath
+                }
+            }
 
         })
         .then(function(res) {
